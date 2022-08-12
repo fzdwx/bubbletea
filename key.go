@@ -3,6 +3,7 @@ package tea
 import (
 	"errors"
 	"fmt"
+	"github.com/yuin/charsetutil"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"io"
 	"unicode/utf8"
@@ -498,9 +499,12 @@ func readInputs(input io.Reader) ([]Msg, error) {
 	b := buf[:numBytes]
 
 	// pre check is gb18030? https://github.com/charmbracelet/bubbletea/issues/393
-	gb18030Decode, err := simplifiedchinese.GB18030.NewDecoder().Bytes(b)
-	if err == nil {
-		b = gb18030Decode
+	result, err := charsetutil.Guess(b)
+	if err != nil || result.Charset() != "UTF-8" {
+		gb18030Decode, err := simplifiedchinese.GB18030.NewDecoder().Bytes(b)
+		if err == nil {
+			b = gb18030Decode
+		}
 	}
 
 	// Translate input into runes. In most cases we'll receive exactly one
