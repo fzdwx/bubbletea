@@ -3,6 +3,7 @@ package tea
 import (
 	"errors"
 	"fmt"
+	"golang.org/x/text/encoding/simplifiedchinese"
 	"io"
 	"unicode/utf8"
 )
@@ -495,6 +496,12 @@ func readInputs(input io.Reader) ([]Msg, error) {
 	var runeSets [][]rune
 	var runes []rune
 	b := buf[:numBytes]
+
+	// pre check is gb18030? https://github.com/charmbracelet/bubbletea/issues/393
+	gb18030Decode, err := simplifiedchinese.GB18030.NewDecoder().Bytes(b)
+	if err == nil {
+		b = gb18030Decode
+	}
 
 	// Translate input into runes. In most cases we'll receive exactly one
 	// rune, but there are cases, particularly when an input method editor is
