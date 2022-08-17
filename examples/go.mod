@@ -15,7 +15,6 @@ require (
 	github.com/muesli/reflow v0.3.0
 	github.com/muesli/termenv v0.12.1-0.20220615005108-4e9068de9898
 	github.com/rivo/uniseg v0.3.4 // indirect
-	github.com/yuin/charsetutil v1.0.0 // indirect
 	golang.org/x/net v0.0.0-20220811182439-13a9a731de15 // indirect
 	golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab // indirect
 	golang.org/x/term v0.0.0-20220722155259-a9ba230a4035 // indirect
